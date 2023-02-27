@@ -19,4 +19,30 @@ for x in range(1,4):
         for link in item.find_all('a', href=True):
             productLinks.append(baseurl + link['href'])
 
-print(len(productLinks))
+# testLink = "https://www.thewhiskyexchange.com/queue/p/70286/karuizawa-38-year-old-platinum-geisha"
+whiskyList = []
+for link in productLinks:
+    r = requests.get(link, headers=headers)
+
+    soup = BeautifulSoup(r.content, 'lxml')
+
+    name = soup.find('h1', class_="product-main__name").text.strip()
+
+    try:
+        price = soup.find('p', class_="product-action__price").text.strip()
+        description = soup.find('div', class_="product-main__description").text.strip()
+    except:
+        price = "Out of stock"
+        description = "out of stock"
+
+
+
+    whisky = {
+        'name' : name,
+        'price' : price,
+        'description': description
+    }
+
+    whiskyList.append(whisky)
+    print('saving : ',whisky['name'])
+
