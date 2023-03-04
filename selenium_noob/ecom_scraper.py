@@ -32,7 +32,12 @@ for phone in phones:
     try:
         phone_name = phone.find_element(By.CSS_SELECTOR, 'h3.name').text
         phone_price = phone.find_element(By.CSS_SELECTOR, 'div.prc').text
+        a_tag = driver.find_element(By.CLASS_NAME, 'core')
+        if a_tag.get_attribute('href'):
+            href = a_tag.get_attribute("href")
+
     except:
         phone_name = "Out of stock"
         phone_price = "Out of stock"
     print(phone_name,phone_price)
+    print(href)
