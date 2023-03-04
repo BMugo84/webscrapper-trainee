@@ -3,7 +3,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.firefox.options import Options
 
-url = 'https://www.jumia.co.ke/mobile-phones/apple--samsung--xiaomi/?rating=3-5&price=10000-192270#catalog-listing'
+url = 'https://www.jumia.co.ke/mobile-phones/apple--samsung--xiaomi/?rating=3-5&price=10000-192270&page=4#catalog-listing'
 #   remove popup ads
 options = Options()
 options.set_preference("dom.disable_beforeunload", True)
@@ -29,6 +29,10 @@ phones = driver.find_elements(By.CSS_SELECTOR, 'article.prd')
 
 
 for phone in phones:
-    phone_name = phone.find_element(By.CSS_SELECTOR, 'h3.name').text
-    phone_price = phone.find_element(By.CSS_SELECTOR, 'div.prc').text
+    try:
+        phone_name = phone.find_element(By.CSS_SELECTOR, 'h3.name').text
+        phone_price = phone.find_element(By.CSS_SELECTOR, 'div.prc').text
+    except:
+        phone_name = "Out of stock"
+        phone_price = "Out of stock"
     print(phone_name,phone_price)
